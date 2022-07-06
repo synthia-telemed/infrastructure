@@ -1,0 +1,3 @@
+name: senior-project-infrastructure
+runtime: nodejs
+description: A IoC for senior project
