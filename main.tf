@@ -4,6 +4,11 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "3.13.0"
     }
+
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "2.26.1"
+    }
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "2.12.1"
@@ -18,9 +23,6 @@ terraform {
     }
   }
 }
-
-
-
 provider "kubernetes" {
   host                   = azurerm_kubernetes_cluster.aks_cluster.kube_config.0.host
   client_certificate     = base64decode(azurerm_kubernetes_cluster.aks_cluster.kube_config.0.client_certificate)
