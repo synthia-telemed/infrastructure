@@ -46,13 +46,11 @@ resource "azurerm_role_assignment" "aks-acr-role-assignment" {
 
 resource "azuread_application" "github_action_app" {
   display_name = "github_action_push_acr"
-  owners       = [data.azuread_client_config.current.object_id]
 }
 
 resource "azuread_service_principal" "github_action_sp" {
   application_id               = azuread_application.github_action_app.application_id
   app_role_assignment_required = false
-  owners                       = [data.azuread_client_config.current.object_id]
 }
 
 resource "azuread_service_principal_password" "github_action_sp_password" {
