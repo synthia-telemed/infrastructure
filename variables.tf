@@ -11,7 +11,7 @@ variable "project_name" {
 }
 
 variable "registry_name" {
-  default     = "synthia-telemed"
+  default     = "synthiatelemed"
   type        = string
   description = "Name of the Azure Container Registry"
 }
