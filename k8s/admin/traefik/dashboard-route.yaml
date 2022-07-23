@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard-route
+  namespace: traefik
+spec:
+  routes:
+  - match: Host(`traefik.synthia.cscms.me`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+    kind: Rule
+    middlewares:
+    - name: admin-basic-auth-middleware
+      namespace: traefik
+    services:
+    - name: api@internal
+      kind: TraefikService
+  tls:
+    secretName: traefik-admin-tls
+    domains: 
+    - main: traefik.synthia.cscms.me

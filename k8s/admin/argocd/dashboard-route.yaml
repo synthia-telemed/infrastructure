@@ -1,0 +1,20 @@
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argocd-dashboard-route
+  namespace: traefik
+spec:
+  routes:
+  - match: Host(`argocd.synthia.cscms.me`)
+    kind: Rule
+    services:
+    - name: argocd-argo-cd-server
+      namespace: argocd
+      kind: Service
+      port: 80
+      scheme: http
+  tls:
+    secretName: argocd-admin-tls
+    domains: 
+    - main: argocd.synthia.cscms.me
