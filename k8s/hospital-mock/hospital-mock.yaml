@@ -14,21 +14,21 @@ spec:
         app: hospital-mock-depl
     spec:
       containers:
-      - name: hospital-mock-depl
-        image: synthiatelemed.azurecr.io/hospital-it-system-mock:52e7f529bb8015db44b3321cc36eb3565a2c51ef
-        resources:
-          limits:
-            memory: "256Mi"
-            cpu: "100m"
-          requests:
-            memory: "64Mi"
-            cpu: "20m"
-        ports:
-        - containerPort: 3000
-        envFrom:
-          - secretRef:
-              name: hospital-mock-secret
-              optional: false
+        - name: hospital-mock-depl
+          image: synthiatelemed.azurecr.io/hospital-it-system-mock:e17db5754a514d6d5fbfc403dd1c8a6a31397ebe
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "100m"
+            requests:
+              memory: "64Mi"
+              cpu: "20m"
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: hospital-mock-secret
+                optional: false
 ---
 apiVersion: v1
 kind: Service
@@ -39,5 +39,9 @@ spec:
   selector:
     app: hospital-mock-depl
   ports:
-  - port: 3000
-    targetPort: 3000
+    - port: 3000
+      targetPort: 3000
+  template:
+    spec:
+      containers:
+        - image: synthiatelemed.azurecr.io/hospital-it-system-mock:e17db5754a514d6d5fbfc403dd1c8a6a31397ebe
