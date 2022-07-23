@@ -29,19 +29,3 @@ spec:
             - secretRef:
                 name: hospital-mock-secret
                 optional: false
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: hospital-mock-srv
-  namespace: hospital-mock
-spec:
-  selector:
-    app: hospital-mock-depl
-  ports:
-    - port: 3000
-      targetPort: 3000
-  template:
-    spec:
-      containers:
-        - image: synthiatelemed.azurecr.io/hospital-it-system-mock:e17db5754a514d6d5fbfc403dd1c8a6a31397ebe
