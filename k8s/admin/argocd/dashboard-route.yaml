@@ -6,7 +6,7 @@ metadata:
   namespace: traefik
 spec:
   routes:
-  - match: Host(`argocd.synthia.cscms.me`)
+  - match: Host(`argocd.synthia.tech`)
     kind: Rule
     services:
     - name: argocd-argo-cd-server
@@ -17,4 +17,4 @@ spec:
   tls:
     secretName: argocd-admin-tls
     domains: 
-    - main: argocd.synthia.cscms.me
+    - main: argocd.synthia.tech

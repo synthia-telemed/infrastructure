@@ -5,7 +5,7 @@ metadata:
   namespace: traefik
 spec:
   routes:
-  - match: Host(`traefik.synthia.cscms.me`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+  - match: Host(`traefik.synthia.tech`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
     kind: Rule
     middlewares:
     - name: admin-basic-auth-middleware
@@ -16,4 +16,4 @@ spec:
   tls:
     secretName: traefik-admin-tls
     domains: 
-    - main: traefik.synthia.cscms.me
+    - main: traefik.synthia.tech
