@@ -14,7 +14,7 @@ jobs:
         id: imgupd
         uses: mikefarah/yq@master
         with:
-          cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i k8s/hospital-mock/hospital-mock.yaml
+          cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i k8s/hospital-mock/hospital-mock-depl.yaml
       
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
