@@ -8,6 +8,9 @@ spec:
   routes:
   - match: Host(`argocd.synthia.tech`)
     kind: Rule
+    middlewares:
+    - name: admin-basic-auth-middleware
+      namespace: traefik
     services:
     - name: argocd-argo-cd-server
       namespace: argocd
