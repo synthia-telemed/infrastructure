@@ -48,11 +48,13 @@ variable "postgresql_config" {
 variable "postgresql_admin_username" {
   default     = "postgres"
   type        = string
+  sensitive   = true
   description = "Username of the PostgreSQL administrator"
 }
 
 variable "postgresql_admin_password" {
   default     = "changeThiS!!"
   type        = string
+  sensitive   = true
   description = "Password of the PostgreSQL administrator"
 }
