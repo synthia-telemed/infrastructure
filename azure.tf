@@ -53,6 +53,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql_server" {
   version                = var.postgresql_config.version
   sku_name               = var.postgresql_config.sku_name
   storage_mb             = var.postgresql_config.storage_size
+  zone                   = var.postgresql_config.zone
   depends_on = [
     azurerm_resource_group.resource_group
   ]

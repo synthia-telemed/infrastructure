@@ -35,12 +35,14 @@ variable "postgresql_config" {
     location     = "eastasia"
     version      = "13"
     storage_size = 32768
+    zone         = "2"
   }
   type = object({
     sku_name     = string
     location     = string
     version      = string
     storage_size = number
+    zone         = string
   })
   description = "Configuration of the PostgreSQL server"
 }
