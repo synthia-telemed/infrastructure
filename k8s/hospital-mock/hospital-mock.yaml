@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hospital-mock-depl
+  namespace: hospital-mock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hospital-mock-depl
+  template:
+    metadata:
+      labels:
+        app: hospital-mock-depl
+    spec:
+      containers:
+      - name: hospital-mock-depl
+        image: synthiatelemed.azurecr.io/hospital-it-system-mock:d5c23a1e78d34b3cee201695c4161f1f9194f1ae
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "100m"
+          requests:
+            memory: "64Mi"
+            cpu: "20m"
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hospital-mock-srv
+  namespace: hospital-mock
+spec:
+  selector:
+    app: hospital-mock-depl
+  ports:
+  - port: 3000
+    targetPort: 3000

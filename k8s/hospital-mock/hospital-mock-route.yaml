@@ -1,0 +1,18 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard-route
+  namespace: hospital-mock
+spec:
+  routes:
+  - match: Host(`hospital-mock.synthia.tech`)
+    kind: Rule
+    services:
+    - name: hospital-mock-srv
+      namespace: hospital-mock
+      kind: Service
+      port: 3000
+  tls:
+    secretName: hospital-mock-tls
+    domains: 
+    - main: hospital-mock.synthia.tech
