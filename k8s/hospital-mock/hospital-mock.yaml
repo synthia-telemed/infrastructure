@@ -25,6 +25,10 @@ spec:
             cpu: "20m"
         ports:
         - containerPort: 3000
+        envFrom:
+          - secretRef:
+              name: hospital-mock-secret
+              optional: false
 ---
 apiVersion: v1
 kind: Service
