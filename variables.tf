@@ -27,3 +27,32 @@ variable "default_node_config" {
   })
   description = "Default node configuration"
 }
+
+
+variable "postgresql_config" {
+  default = {
+    sku_name    = "B_Standard_B1ms"
+    location    = "eastasia"
+    version     = "13"
+    storageSize = 32768
+  }
+  type = object({
+    sku_name     = string
+    location     = string
+    version      = string
+    storage_size = number
+  })
+  description = "Configuration of the PostgreSQL server"
+}
+
+variable "postgresql_admin_username" {
+  default     = "postgres"
+  type        = string
+  description = "Username of the PostgreSQL administrator"
+}
+
+variable "postgresql_admin_password" {
+  default     = "changeThiS!!"
+  type        = string
+  description = "Password of the PostgreSQL administrator"
+}
