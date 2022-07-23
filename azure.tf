@@ -45,14 +45,14 @@ resource "azurerm_role_assignment" "aks-acr-role-assignment" {
 }
 
 resource "azurerm_postgresql_flexible_server" "postgresql_server" {
-  name                         = "${var.project_name}-postgresql"
-  resource_group_name          = azurerm_resource_group.resource_group.name
-  location                     = var.postgresql_config.location
-  administrator_login          = var.postgresql_admin_username
-  administrator_login_password = var.postgresql_admin_password
-  version                      = var.postgresql_config.version
-  sku_name                     = var.postgresql_config.sku_name
-  storage_mb                   = var.postgresql_config.storage_size
+  name                   = "${var.project_name}-postgresql"
+  resource_group_name    = azurerm_resource_group.resource_group.name
+  location               = var.postgresql_config.location
+  administrator_login    = var.postgresql_admin_username
+  administrator_password = var.postgresql_admin_password
+  version                = var.postgresql_config.version
+  sku_name               = var.postgresql_config.sku_name
+  storage_mb             = var.postgresql_config.storage_size
   depends_on = [
     azurerm_resource_group.resource_group
   ]
