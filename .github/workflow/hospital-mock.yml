@@ -1,0 +1,21 @@
+name: Hospital Mock New Image
+
+on:
+  repository_dispatch:
+    types: [new-image]
+    
+jobs:
+  update-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Update Image Version
+        id: imgupd
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i k8s/hospital-mock/hospital-mock.yaml
+      
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply image name changes to ${{ github.event.client_payload.image }}
