@@ -31,10 +31,10 @@ variable "default_node_config" {
 
 variable "postgresql_config" {
   default = {
-    sku_name    = "B_Standard_B1ms"
-    location    = "eastasia"
-    version     = "13"
-    storageSize = 32768
+    sku_name     = "B_Standard_B1ms"
+    location     = "eastasia"
+    version      = "13"
+    storage_size = 32768
   }
   type = object({
     sku_name     = string
