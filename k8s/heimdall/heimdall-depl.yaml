@@ -40,3 +40,17 @@ spec:
             - configMapRef:
                 name: heimdall-configmap
                 optional: true
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 5
