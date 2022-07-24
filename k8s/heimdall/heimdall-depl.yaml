@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: heimdall-depl
-          image: synthiatelemed.azurecr.io/heimdall:latest
+          image: synthiatelemed.azurecr.io/heimdall:59fed5be29418dcd86f2af1d42bd1f9a4d1c2cc6
           resources:
             limits:
               memory: "128Mi"
@@ -36,6 +36,6 @@ spec:
             - secretRef:
                 name: heimdall-secret
                 optional: true
-            -  configMapRef:
-                 name: heimdall-configmap
-                 optional: true
+            - configMapRef:
+                name: heimdall-configmap
+                optional: true
