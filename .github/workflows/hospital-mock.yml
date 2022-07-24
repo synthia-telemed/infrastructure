@@ -18,4 +18,4 @@ jobs:
       
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Apply image name changes to ${{ github.event.client_payload.image }}
+          commit_message: "[BOT]: update image to ${{ github.event.client_payload.image }}"
