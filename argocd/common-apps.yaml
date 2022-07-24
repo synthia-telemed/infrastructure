@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: common-apps
+  namespace: argocd
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  source:
+    path: k8s/common
+    repoURL: git@github.com:synthia-telemed/infrastructure.git
+    targetRevision: main
+    directory:
+      recurse: true
+  project: default
+  syncPolicy:
+    automated:
+      prune: true 
+      selfHeal: true
