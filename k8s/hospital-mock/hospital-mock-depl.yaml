@@ -19,13 +19,28 @@ spec:
           resources:
             limits:
               memory: "256Mi"
-              cpu: "100m"
+              cpu: "150m"
             requests:
-              memory: "64Mi"
-              cpu: "20m"
+              memory: "100Mi"
+              cpu: "10m"
           ports:
             - containerPort: 3000
           envFrom:
             - secretRef:
                 name: hospital-mock-secret
                 optional: false
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 10
+
