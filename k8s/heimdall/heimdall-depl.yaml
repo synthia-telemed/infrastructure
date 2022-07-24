@@ -42,15 +42,15 @@ spec:
                 optional: true
           livenessProbe:
             httpGet:
-              path: /
+              path: /healthcheck
               port: 8080
             failureThreshold: 3
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
-              path: /
+              path: /healthcheck
               port: 8080
             failureThreshold: 3
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 5
