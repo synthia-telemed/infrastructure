@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: heimdall-auth
+  namespace: heimdall
+spec:
+  forwardAuth:
+    address: http://heimdall-rest-api-srv:8080/auth/header
+    authRequestHeaders:
+      - Authorization
+    authResponseHeaders:
+      - X-USER-ID
+      - X-USER-ROLE
