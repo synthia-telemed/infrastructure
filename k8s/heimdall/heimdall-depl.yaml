@@ -4,6 +4,7 @@ metadata:
   name: heimdall-depl
   namespace: heimdall
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: heimdall-depl
