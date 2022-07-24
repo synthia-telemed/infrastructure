@@ -2,7 +2,7 @@ name: Hospital Mock New Image
 
 on:
   repository_dispatch:
-    types: [new-image]
+    types: [hospital-mock-new-image]
     
 jobs:
   update-image:
