@@ -1,8 +1,9 @@
-name: Hospital Mock New Image
+
+name: Heimdall New Image
 
 on:
   repository_dispatch:
-    types: [hospital-mock-new-image]
+    types: [heimdall-new-image]
     
 jobs:
   update-image:
@@ -14,7 +15,7 @@ jobs:
         id: imgupd
         uses: mikefarah/yq@master
         with:
-          cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i k8s/hospital-mock/hospital-mock-depl.yaml
+          cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i k8s/heimdall/heimdall-depl.yaml
       
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
