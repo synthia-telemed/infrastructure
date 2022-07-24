@@ -5,6 +5,8 @@ metadata:
   name: argocd-dashboard-route
   namespace: traefik
 spec:
+  entryPoints:
+    - websecure
   routes:
   - match: Host(`argocd.synthia.tech`)
     kind: Rule

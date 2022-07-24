@@ -4,6 +4,8 @@ metadata:
   name: traefik-dashboard-route
   namespace: traefik
 spec:
+  entryPoints:
+    - websecure
   routes:
   - match: Host(`traefik.synthia.tech`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
     kind: Rule

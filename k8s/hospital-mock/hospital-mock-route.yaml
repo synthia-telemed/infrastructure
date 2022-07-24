@@ -4,6 +4,8 @@ metadata:
   name: hospital-mock-route
   namespace: hospital-mock
 spec:
+  entryPoints:
+    - websecure
   routes:
   - match: Host(`hospital-mock.synthia.tech`)
     kind: Rule
