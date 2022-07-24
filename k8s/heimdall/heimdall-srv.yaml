@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: heimdall-rest-api-srv
+  namespace: heimdall
+spec:
+  selector:
+    app: heimdall-depl
+  ports:
+  - port: 8080
+    targetPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: heimdall-grpc-srv
+  namespace: heimdall
+spec:
+  selector:
+    app: heimdall-depl
+  ports:
+  - port: 5050
+    targetPort: 5050

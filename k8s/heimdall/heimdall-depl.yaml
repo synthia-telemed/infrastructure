@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heimdall-depl
+  namespace: heimdall
+spec:
+  selector:
+    matchLabels:
+      app: heimdall-depl
+  template:
+    metadata:
+      labels:
+        app: heimdall-depl
+    spec:
+      containers:
+        - name: heimdall-depl
+          image: synthiatelemed.azurecr.io/heimdall:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+            requests:
+              memory: "32Mi"
+              cpu: "10m"
+          ports:
+            - containerPort: 8080
+            - containerPort: 5050
+          env:
+            - name: JWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: heimdall-secret
+                  key: JWS_SECRET_KEY
+                  optional: false
+          envFrom:
+            - secretRef:
+                name: heimdall-secret
+                optional: true
+            -  configMapRef:
+                 name: heimdall-configmap
+                 optional: true
