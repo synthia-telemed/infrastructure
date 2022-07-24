@@ -13,6 +13,8 @@ spec:
     middlewares:
     - name: admin-basic-auth-middleware
       namespace: traefik
+    - name: default-rate-limit-middleware
+      namespace: default
     services:
     - name: argocd-argo-cd-server
       namespace: argocd

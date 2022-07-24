@@ -9,6 +9,9 @@ spec:
   routes:
   - match: Host(`hospital-mock.synthia.tech`)
     kind: Rule
+    middlewares:
+      - name: default-rate-limit-middleware
+        namespace: default
     services:
     - name: hospital-mock-srv
       namespace: hospital-mock
