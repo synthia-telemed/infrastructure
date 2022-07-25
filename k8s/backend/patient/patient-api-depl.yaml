@@ -20,7 +20,7 @@ spec:
             memory: "128Mi"
             cpu: "100m"
           requests:
-            memory: "32Mi"
+            memory: "16Mi"
             cpu: "10m"
         ports:
         - containerPort: 8080
@@ -29,4 +29,18 @@ spec:
             name: backend-api-secret
         - configMapRef:
             name: backend-api-configmap
+        livenessProbe:
+            httpGet:
+              path: /api/healthcheck
+              port: 8080
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /api/healthcheck
+            port: 8080
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 5
 
