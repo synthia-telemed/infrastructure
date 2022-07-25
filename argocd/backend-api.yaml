@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: default
+    namespace: backend-api
     server: https://kubernetes.default.svc
   source:
     path: k8s/backend
