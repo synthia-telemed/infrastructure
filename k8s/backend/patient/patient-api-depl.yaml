@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-patient-api-depl
+  namespace: backend-api
+spec:
+  selector:
+    matchLabels:
+      app: backend-patient-api-depl
+  template:
+    metadata:
+      labels:
+        app: backend-patient-api-depl
+    spec:
+      containers:
+      - name: backend-patient-api-depl
+        image: synthiatelemed.azurecr.io/backend-api:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+          requests:
+            memory: "32Mi"
+            cpu: "10m"
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,10 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: backend-api-strip-prefix-middleware
+  namespace: backend-api
+spec:
+  stripPrefix:
+    prefixes:
+      - /patient
+      - /doctor

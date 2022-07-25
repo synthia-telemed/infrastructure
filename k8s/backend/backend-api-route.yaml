@@ -1,0 +1,40 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: backend-api-route
+  namespace: backend-api
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  # Patient API
+  - match: Host(`api.synthia.tech`) && PathPrefix(`/api/patient`)
+    kind: Rule
+    middlewares:
+      - name: default-rate-limit-middleware
+        namespace: default
+      - name: backend-api-strip-prefix-middleware
+        namespace: backend-api
+    services:
+    - name: backend-patient-api-srv
+      namespace: backend-api
+      kind: Service
+      port: 8080
+  - match: Host(`api.synthia.tech`) && PathPrefix(`/api/patient/protected`)
+    kind: Rule
+    middlewares:
+      - name: default-rate-limit-middleware
+        namespace: default
+      - name: heimdall-auth-middleware
+        namespace: heimdall
+      - name: backend-api-strip-prefix-middleware
+        namespace: backend-api
+    services:
+    - name: backend-patient-api-srv
+      namespace: backend-api
+      kind: Service
+      port: 8080
+  tls:
+    secretName: backend-api-tls
+    domains: 
+    - main: api.synthia.tech
