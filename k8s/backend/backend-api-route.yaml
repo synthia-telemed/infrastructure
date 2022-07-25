@@ -8,7 +8,7 @@ spec:
     - websecure
   routes:
   # Patient API
-  - match: Host(`api.synthia.tech`) && PathPrefix(`/api/patient`)
+  - match: Host(`api.synthia.tech`) && PathPrefix(`/patient/api`)
     kind: Rule
     middlewares:
       - name: default-rate-limit-middleware
@@ -20,7 +20,7 @@ spec:
       namespace: backend-api
       kind: Service
       port: 8080
-  - match: Host(`api.synthia.tech`) && PathPrefix(`/api/patient/protected`)
+  - match: Host(`api.synthia.tech`) && PathPrefix(`/patient/api/protected`)
     kind: Rule
     middlewares:
       - name: default-rate-limit-middleware
