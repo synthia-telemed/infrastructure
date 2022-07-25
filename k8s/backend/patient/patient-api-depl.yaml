@@ -13,14 +13,14 @@ spec:
         app: backend-patient-api-depl
     spec:
       containers:
-      - name: backend-patient-api-depl
-        image: synthiatelemed.azurecr.io/backend-api:latest
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "100m"
-          requests:
-            memory: "32Mi"
-            cpu: "10m"
-        ports:
-        - containerPort: 8080
+        - name: backend-patient-api-depl
+          image: synthiatelemed.azurecr.io/backend-api:447cc8573ac04345bdbf3d4b2e12984dacddc0e5
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+            requests:
+              memory: "32Mi"
+              cpu: "10m"
+          ports:
+            - containerPort: 8080
