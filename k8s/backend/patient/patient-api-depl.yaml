@@ -24,3 +24,9 @@ spec:
             cpu: "10m"
         ports:
         - containerPort: 8080
+        envFrom:
+        - secretRef:
+            name: backend-api-secret
+        - configMapRef:
+            name: backend-api-configmap
+
