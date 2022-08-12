@@ -13,34 +13,33 @@ spec:
         app: backend-patient-api-depl
     spec:
       containers:
-      - name: backend-patient-api-depl
-        image: synthiatelemed.azurecr.io/backend-api:latest
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "100m"
-          requests:
-            memory: "16Mi"
-            cpu: "10m"
-        ports:
-        - containerPort: 8080
-        envFrom:
-        - secretRef:
-            name: backend-api-secret
-        - configMapRef:
-            name: backend-api-configmap
-        livenessProbe:
+        - name: backend-patient-api-depl
+          image: synthiatelemed.azurecr.io/backend-api:18c188999bd6c58a209ee6117951729086d65274
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+            requests:
+              memory: "16Mi"
+              cpu: "10m"
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: backend-api-secret
+            - configMapRef:
+                name: backend-api-configmap
+          livenessProbe:
             httpGet:
               path: /api/healthcheck
               port: 8080
             failureThreshold: 3
             initialDelaySeconds: 5
             periodSeconds: 5
-        readinessProbe:
-          httpGet:
-            path: /api/healthcheck
-            port: 8080
-          failureThreshold: 3
-          initialDelaySeconds: 5
-          periodSeconds: 5
-
+          readinessProbe:
+            httpGet:
+              path: /api/healthcheck
+              port: 8080
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
