@@ -18,7 +18,7 @@ variable "registry_name" {
 
 variable "default_node_config" {
   default = {
-    size  = "Standard_B2ms"
+    size  = "Standard_B2s"
     count = 1
   }
   type = object({
