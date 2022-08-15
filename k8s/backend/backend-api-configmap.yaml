@@ -16,4 +16,4 @@ data:
   DATABASE_SSL_ROOT_CERT: /app/DigiCertGlobalRootCA.crt.pem
   DATABASE_TIMEZONE: Asia/Bangkok
   # Redis
-  REDIS_HOST: common-redis-srv.default
+  REDIS_HOST: common-redis-srv.default:6379
