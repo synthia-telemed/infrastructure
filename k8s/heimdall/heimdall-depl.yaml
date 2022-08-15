@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: heimdall-depl
-          image: synthiatelemed.azurecr.io/heimdall:bf801a3dcc2bae40b1cc7d684e88e615ed44d409
+          image: synthiatelemed.azurecr.io/heimdall:9fb3591cb550933610f26961053b8d6bde5534a8
           resources:
             limits:
               memory: "128Mi"
