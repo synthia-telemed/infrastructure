@@ -8,3 +8,12 @@ data:
   MODE: production
   PORT: "8080"
   GIN_MODE: release
+  HOSPITAL_SYS_ENDPOINT: "http://hospital-mock-srv:3000/graphql"
+  TOKEN_SERVICE_ENDPOINT: "http://heimdall-grpc-srv:5050"
+  # DB
+  DATABASE_NAME: synthia
+  DATABASE_SSL_MODE: verify-full
+  DATABASE_SSL_ROOT_CERT: /app/DigiCertGlobalRootCA.crt.pem
+  DATABASE_TIMEZONE: Asia/Bangkok
+  # Redis
+  REDIS_HOST: common-redis-srv.default
