@@ -4,7 +4,6 @@ metadata:
   name: backend-api-configmap
   namespace: backend-api
 data:
-  TOKEN_SERVICE_HOST: heimdall-grpc-srv
   MODE: production
   PORT: "8080"
   GIN_MODE: release
