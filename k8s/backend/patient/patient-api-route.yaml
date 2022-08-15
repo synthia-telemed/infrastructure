@@ -1,13 +1,27 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: backend-api-route
+  name: backend-patient-api-route
   namespace: backend-api
 spec:
   entryPoints:
     - websecure
   routes:
   # Patient API
+  - match: Host(`api.synthia.tech`) && PathPrefix(`/patient/api/docs/`)
+    kind: Rule
+    middlewares:
+      - name: default-rate-limit-middleware
+        namespace: default
+      - name: backend-api-strip-prefix-middleware
+        namespace: backend-api
+      - name: admin-basic-auth-middleware
+        namespace: traefik
+    services:
+    - name: backend-patient-api-srv
+      namespace: backend-api
+      kind: Service
+      port: 8080
   - match: Host(`api.synthia.tech`) && PathPrefix(`/patient/api`)
     kind: Rule
     middlewares:
