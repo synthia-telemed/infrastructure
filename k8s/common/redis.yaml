@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: common-redis
-        image: redis:7
+        image: redis:6-alpine
         resources:
           limits:
             memory: "64Mi"
