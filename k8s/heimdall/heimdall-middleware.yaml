@@ -5,7 +5,7 @@ metadata:
   namespace: heimdall
 spec:
   forwardAuth:
-    address: http://heimdall-rest-api-srv:8080/auth/header
+    address: http://heimdall-rest-api-srv.heimdall:8080/auth/header
     authRequestHeaders:
       - Authorization
     authResponseHeaders:
