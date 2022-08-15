@@ -7,7 +7,7 @@ data:
   MODE: production
   PORT: "8080"
   GIN_MODE: release
-  HOSPITAL_SYS_ENDPOINT: hospital-mock-srv.hospital-mock:3000/graphql
+  HOSPITAL_SYS_ENDPOINT: http://hospital-mock-srv.hospital-mock:3000/graphql
   TOKEN_SERVICE_ENDPOINT: heimdall-grpc-srv.heimdall:5050
   # DB
   DATABASE_NAME: synthia
