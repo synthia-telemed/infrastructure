@@ -22,7 +22,7 @@ spec:
       namespace: backend-api
       kind: Service
       port: 8080
-  - match: Host(`api.synthia.tech`) && PathPrefix(`/patient/api`)
+  - match: Host(`api.synthia.tech`) && (PathPrefix(`/patient/api/auth`) || Path(`/patient/api/healthcheck`))
     kind: Rule
     middlewares:
       - name: default-rate-limit-middleware
@@ -34,7 +34,7 @@ spec:
       namespace: backend-api
       kind: Service
       port: 8080
-  - match: Host(`api.synthia.tech`) && PathPrefix(`/patient/api/protected`)
+  - match: Host(`api.synthia.tech`) && PathPrefix(`/patient/api`)
     kind: Rule
     middlewares:
       - name: default-rate-limit-middleware
