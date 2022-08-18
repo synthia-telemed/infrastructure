@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend-patient-api-depl
-          image: synthiatelemed.azurecr.io/backend-api:e5e1303ebbd45f617eaafd31998260648928125f
+          image: synthiatelemed.azurecr.io/backend-api:31d5f3ece83b28b2c2c80724af9ae28886920d74
           resources:
             limits:
               memory: "128Mi"
