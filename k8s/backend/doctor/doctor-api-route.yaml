@@ -1,0 +1,54 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: backend-doctor-api-route
+  namespace: backend-api
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  # doctor API
+  - match: Host(`api.synthia.tech`) && PathPrefix(`/doctor/api/docs/`)
+    kind: Rule
+    middlewares:
+      - name: default-rate-limit-middleware
+        namespace: default
+      - name: backend-api-strip-prefix-middleware
+        namespace: backend-api
+      - name: admin-basic-auth-middleware
+        namespace: traefik
+    services:
+    - name: backend-doctor-api-srv
+      namespace: backend-api
+      kind: Service
+      port: 8080
+  - match: Host(`api.synthia.tech`) && (PathPrefix(`/doctor/api/auth`) || Path(`/doctor/api/healthcheck`))
+    kind: Rule
+    middlewares:
+      - name: default-rate-limit-middleware
+        namespace: default
+      - name: backend-api-strip-prefix-middleware
+        namespace: backend-api
+    services:
+    - name: backend-doctor-api-srv
+      namespace: backend-api
+      kind: Service
+      port: 8080
+  - match: Host(`api.synthia.tech`) && PathPrefix(`/doctor/api`)
+    kind: Rule
+    middlewares:
+      - name: default-rate-limit-middleware
+        namespace: default
+      - name: heimdall-auth-middleware
+        namespace: heimdall
+      - name: backend-api-strip-prefix-middleware
+        namespace: backend-api
+    services:
+    - name: backend-doctor-api-srv
+      namespace: backend-api
+      kind: Service
+      port: 8080
+  tls:
+    secretName: backend-api-tls
+    domains: 
+    - main: api.synthia.tech
