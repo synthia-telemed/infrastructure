@@ -11,11 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Update Image Version
-        id: imgupd
+      - name: Update Patient Backend API Image Version
         uses: mikefarah/yq@master
         with:
           cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i k8s/backend/patient/patient-api-depl.yaml
+          
+      - name: Update Doctor Backend API Image Version
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i k8s/backend/doctor/doctor-api-depl.yaml
       
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
