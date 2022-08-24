@@ -5,8 +5,8 @@ metadata:
   namespace: backend-api
 spec:
   headers:
-    frameDeny: true
-    browserXssFilter: true
+    # frameDeny: true
+    # browserXssFilter: true
     accessControlAllowMethods:
       - "GET"
       - "OPTIONS"
