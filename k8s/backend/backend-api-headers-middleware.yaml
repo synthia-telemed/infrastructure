@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: backend-api-headers-middleware
+  namespace: backend-api
+spec:
+  headers:
+    frameDeny: true
+    browserXssFilter: true
+    accessControlAllowMethods:
+      - "GET"
+      - "OPTIONS"
+      - "PUT"
+      - "POST"
+      - "DELETE"
+    accessControlAllowOriginList:
+      - "https://synthia.tech"
+      - "http://localhost:3000"
+    accessControlMaxAge: 100
+    addVaryHeader: true
