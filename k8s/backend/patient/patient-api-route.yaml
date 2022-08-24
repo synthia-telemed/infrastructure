@@ -25,6 +25,8 @@ spec:
   - match: Host(`api.synthia.tech`) && (PathPrefix(`/patient/api/auth`) || Path(`/patient/api/healthcheck`))
     kind: Rule
     middlewares:
+      - name: backend-api-headers-middleware
+        namespace: backend-api
       - name: default-rate-limit-middleware
         namespace: default
       - name: backend-api-strip-prefix-middleware
@@ -37,6 +39,8 @@ spec:
   - match: Host(`api.synthia.tech`) && PathPrefix(`/patient/api`)
     kind: Rule
     middlewares:
+      - name: backend-api-headers-middleware
+        namespace: backend-api
       - name: default-rate-limit-middleware
         namespace: default
       - name: heimdall-auth-middleware
