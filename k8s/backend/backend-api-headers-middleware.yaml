@@ -16,5 +16,8 @@ spec:
     accessControlAllowOriginList:
       - "https://synthia.tech"
       - "http://localhost:3000"
+    accessControlAllowHeaders:
+      - Content-Type
+      - Authorization
     accessControlMaxAge: 100
     addVaryHeader: true
