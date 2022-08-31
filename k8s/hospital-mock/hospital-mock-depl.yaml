@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: hospital-mock-depl
-          image: synthiatelemed.azurecr.io/hospital-it-system-mock:d7535ebc7337a921b5b8ffbdf8fb61fb8ff0763e
+          image: synthiatelemed.azurecr.io/hospital-it-system-mock:d47fd1e0e8fcff2329c075abee658258d4306f38
           resources:
             limits:
               memory: "256Mi"
