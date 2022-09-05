@@ -16,6 +16,7 @@ spec:
     accessControlAllowOriginList:
       - "https://synthia.tech"
       - "http://localhost:3000"
+      - "https://dev.patient-frontend.pages.dev"
     accessControlAllowHeaders:
       - Content-Type
       - Authorization
