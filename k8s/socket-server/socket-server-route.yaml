@@ -7,11 +7,23 @@ spec:
   entryPoints:
     - websecure
   routes:
+  - match: Host(`socket.synthia.tech`) && Path(`/healthcheck`))
+    kind: Rule
+    middlewares:
+      - name: default-rate-limit-middleware
+        namespace: default
+    services:
+    - name: socket-server-srv
+      namespace: socket-server
+      kind: Service
+      port: 3000
   - match: Host(`socket.synthia.tech`) 
     kind: Rule
     middlewares:
       - name: default-rate-limit-middleware
         namespace: default
+      - name: heimdall-auth-middleware
+        namespace: heimdall
     services:
     - name: socket-server-srv
       namespace: socket-server
