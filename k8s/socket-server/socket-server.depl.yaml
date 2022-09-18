@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: socket-server-depl
-          image: synthiatelemed.azurecr.io/socket-server:2765f5a8401b11f80f9e8f40a4f66bfe29a71685
+          image: synthiatelemed.azurecr.io/socket-server:5ecd587713a284d5cab0d01eba2e5643b105c5fc
           resources:
             limits:
               memory: "256Mi"
