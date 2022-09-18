@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: socket-server
+  namespace: argocd
+spec:
+  destination:
+    namespace: socket-server
+    server: https://kubernetes.default.svc
+  source:
+    path: k8s/socket-server
+    repoURL: git@github.com:synthia-telemed/infrastructure.git
+    targetRevision: main
+    directory:
+      recurse: true
+  project: default
+  syncPolicy:
+    automated:
+      prune: true 
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

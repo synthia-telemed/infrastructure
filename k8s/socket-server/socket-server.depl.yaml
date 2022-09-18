@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socket-server-depl
+  namespace: socket-server
+spec:
+  selector:
+    matchLabels:
+      app: socket-server-depl
+  template:
+    metadata:
+      labels:
+        app: socket-server-depl
+    spec:
+      containers:
+        - name: socket-server-depl
+          image: synthiatelemed.azurecr.io/socket-server:2765f5a8401b11f80f9e8f40a4f66bfe29a71685
+          resources:
+            limits:
+              memory: "256Mi"
+            requests:
+              memory: "32Mi"
+              cpu: "20m"
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: socket-server-configmap
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 3000
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 3000
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5

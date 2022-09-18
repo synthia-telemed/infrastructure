@@ -1,0 +1,23 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: socket-server-route
+  namespace: socket-server
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`socket.synthia.tech`) 
+    kind: Rule
+    middlewares:
+      - name: default-rate-limit-middleware
+        namespace: default
+    services:
+    - name: socket-server-srv
+      namespace: socket-server
+      kind: Service
+      port: 3000
+  tls:
+    secretName: socket-tls
+    domains: 
+    - main: socket.synthia.tech
