@@ -24,6 +24,8 @@ spec:
         namespace: default
       - name: heimdall-auth-middleware
         namespace: heimdall
+      - name: backend-api-headers-middleware
+        namespace: backend-api
     services:
     - name: socket-server-srv
       namespace: socket-server
