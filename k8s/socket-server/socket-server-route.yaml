@@ -22,8 +22,8 @@ spec:
     middlewares:
       - name: default-rate-limit-middleware
         namespace: default
-      # - name: heimdall-auth-middleware
-      #   namespace: heimdall
+      - name: heimdall-auth-middleware
+        namespace: heimdall
       - name: backend-api-headers-middleware
         namespace: backend-api
     services:
