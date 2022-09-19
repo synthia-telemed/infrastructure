@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`socket.synthia.tech`) && Path(`/healthcheck`))
+  - match: Host(`socket.synthia.tech`) && Path(`/healthcheck`)
     kind: Rule
     middlewares:
       - name: default-rate-limit-middleware
