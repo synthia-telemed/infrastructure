@@ -1,8 +1,8 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: backend-api-headers-middleware
-  namespace: backend-api
+  name: common-headers-middleware
+  namespace: default
 spec:
   headers:
     frameDeny: true
@@ -16,7 +16,9 @@ spec:
     accessControlAllowOriginList:
       - "https://synthia.tech"
       - "http://localhost:3000"
+      - "http://localhost:8080"
       - "https://dev.patient-frontend.pages.dev"
+      - "https://doctor.synthia.tech"
     accessControlAllowHeaders:
       - Content-Type
       - Authorization
