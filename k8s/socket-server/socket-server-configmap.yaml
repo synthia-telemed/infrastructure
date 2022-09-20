@@ -5,5 +5,6 @@ metadata:
   namespace: socket-server
 data:
   PORT: "3000"
-  REDIS_HOST: common-redis-srv.default
+  REDIS_HOST: "common-redis-srv.default"
   REDIS_PORT: "6379"
+  HEIMDALL_ENDPOINT: "heimdall-rest-api-srv.heimdall:8080"
