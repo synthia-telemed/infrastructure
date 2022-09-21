@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    namespace: default
+    namespace: frontend
     server: https://kubernetes.default.svc
   source:
     path: k8s/frontend
@@ -18,3 +18,5 @@ spec:
     automated:
       prune: true 
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
