@@ -14,12 +14,13 @@ spec:
       - "POST"
       - "DELETE"
     accessControlAllowOriginList:
-      - "https://synthia.tech"
-      - "http://localhost:3000"
-      - "http://localhost:8080"
-      - "https://dev.patient-frontend.pages.dev"
-      - "https://doctor.synthia.tech"
-      - "https://synthia-dev.loca.lt"
+      - "*"
+      # - "https://synthia.tech"
+      # - "http://localhost:3000"
+      # - "http://localhost:8080"
+      # - "https://dev.patient-frontend.pages.dev"
+      # - "https://doctor.synthia.tech"
+      # - "https://synthia-dev.loca.lt"
     accessControlAllowHeaders:
       - Content-Type
       - Authorization
