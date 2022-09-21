@@ -19,8 +19,8 @@ spec:
             limits:
               memory: "256Mi"
             requests:
-              memory: "32Mi"
-              cpu: "20m"
+              memory: "64Mi"
+              cpu: "10m"
           ports:
             - containerPort: 3000
           envFrom:
