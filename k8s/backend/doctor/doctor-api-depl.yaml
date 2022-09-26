@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend-doctor-api-depl
-          image: synthiatelemed.azurecr.io/backend-api:289c6cbf342ef2fcd869b54093e5f5c001f66911
+          image: synthiatelemed.azurecr.io/backend-api:793470d6c7868045eed9f07c80d31ed926832d15
           command:
             - "/app/bin/doctor-api"
           resources:
