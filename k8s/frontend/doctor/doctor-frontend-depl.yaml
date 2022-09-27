@@ -26,6 +26,8 @@ spec:
           env:
             - name: NEXT_PUBLIC_SOCKET_SERVER_ENDPOINT
               value: socket-server-srv.socket-server:3000
+            - name: NEXT_PUBLIC_API_SERVER_ENDPOINT
+              value: https://api.synthia.tech
           livenessProbe:
             httpGet:
               path: /
