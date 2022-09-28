@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: doctor-frontend-depl
-          image: synthiatelemed.azurecr.io/doctor-frontend:baa74a9edd7cd5af0fa3bd45c3eb2e958a10ad29
+          image: synthiatelemed.azurecr.io/doctor-frontend:cb19eec6b60ff537912a6fc3f18a660620cdc0b6
           resources:
             limits:
               memory: "256Mi"
