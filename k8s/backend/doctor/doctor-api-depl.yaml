@@ -29,6 +29,8 @@ spec:
           envFrom:
             - secretRef:
                 name: backend-api-secret
+            - secretRef:
+                name: backend-doctor-api-secret
             - configMapRef:
                 name: backend-api-configmap
           livenessProbe:
