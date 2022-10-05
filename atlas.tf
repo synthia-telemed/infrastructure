@@ -12,7 +12,7 @@ resource "mongodbatlas_cluster" "cluster" {
   project_id                  = mongodbatlas_project.project.id
   name                        = "${mongodbatlas_project.project.name}_cluster"
   provider_name               = "TENANT"
-  backing_provider_name       = "AWS"
+  backing_provider_name       = var.mongoatlas_cluster_config.provider
   provider_region_name        = var.mongoatlas_cluster_config.region
   provider_instance_size_name = var.mongoatlas_cluster_config.size
   mongo_db_major_version      = var.mongoatlas_cluster_config.version
