@@ -10,7 +10,7 @@ resource "mongodbatlas_project" "project" {
 
 resource "mongodbatlas_cluster" "cluster" {
   project_id                  = mongodbatlas_project.project.id
-  name                        = "${mongodbatlas_project.project.name}_cluster"
+  name                        = "${mongodbatlas_project.project.name}-cluster"
   provider_name               = "TENANT"
   backing_provider_name       = var.mongoatlas_cluster_config.provider
   provider_region_name        = var.mongoatlas_cluster_config.region
