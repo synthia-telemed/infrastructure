@@ -8,3 +8,4 @@ spec:
     prefixes:
       - /patient
       - /doctor
+      - /measurement

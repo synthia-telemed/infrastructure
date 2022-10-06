@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: measurement-result-api-depl
+  namespace: backend-api
+spec:
+  selector:
+    matchLabels:
+      app: measurement-result-api-depl
+  template:
+    metadata:
+      labels:
+        app: measurement-result-api-depl
+    spec:
+      containers:
+      - name: measurement-result-api-depl
+        image: synthiatelemed.azurecr.io/measurement-result-api:2a74fdbbdde7d0fcf7638478d2747cef4fd5cd66
+        resources:
+          limits:
+            memory: "512Mi"
+          requests:
+            cpu: 50m
+            memory: "128Mi"
+        envFrom:
+          - secretRef:
+              name: measurement-result-api-secret
+        ports:
+        - containerPort: 3000
+        livenessProbe:
+            httpGet:
+              path: /api/healthcheck
+              port: 3000
+            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/healthcheck
+            port: 3000
+          failureThreshold: 5
+          initialDelaySeconds: 30
+          periodSeconds: 10
