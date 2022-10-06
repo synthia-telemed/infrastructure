@@ -21,7 +21,7 @@ spec:
       namespace: backend-api
       kind: Service
       port: 3000
-  - match: Host(`api.synthia.tech`) && Path(`/measurement/api/healthcheck`))
+  - match: Host(`api.synthia.tech`) && PathPrefix(`/measurement/api/healthcheck`))
     kind: Rule
     middlewares:
       - name: common-headers-middleware
