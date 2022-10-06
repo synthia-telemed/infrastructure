@@ -1,4 +1,4 @@
-name: Backend API New Image
+name: Measurement Result API New Image
 
 on:
   repository_dispatch:
