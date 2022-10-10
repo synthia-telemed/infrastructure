@@ -13,30 +13,30 @@ spec:
         app: measurement-result-api-depl
     spec:
       containers:
-      - name: measurement-result-api-depl
-        image: synthiatelemed.azurecr.io/measurement-result-api
-        resources:
-          limits:
-            memory: "512Mi"
-          requests:
-            cpu: 50m
-            memory: "128Mi"
-        envFrom:
-          - secretRef:
-              name: measurement-result-api-secret
-        ports:
-        - containerPort: 3000
-        livenessProbe:
+        - name: measurement-result-api-depl
+          image: synthiatelemed.azurecr.io/measurement-result-api:3d0e02d51b5b63365724c7ccf5c8dc8ee3b2cdfd
+          resources:
+            limits:
+              memory: "512Mi"
+            requests:
+              cpu: 50m
+              memory: "128Mi"
+          envFrom:
+            - secretRef:
+                name: measurement-result-api-secret
+          ports:
+            - containerPort: 3000
+          livenessProbe:
             httpGet:
               path: /api/healthcheck
               port: 3000
             failureThreshold: 5
             initialDelaySeconds: 30
             periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /api/healthcheck
-            port: 3000
-          failureThreshold: 5
-          initialDelaySeconds: 30
-          periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/healthcheck
+              port: 3000
+            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 10
