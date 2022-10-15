@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: measurement-result-api-depl
-          image: synthiatelemed.azurecr.io/measurement-result-api:3d0e02d51b5b63365724c7ccf5c8dc8ee3b2cdfd
+          image: synthiatelemed.azurecr.io/measurement-result-api:28df693df707cf5f01833b61550ca6daf3ba9aac
           resources:
             limits:
               memory: "256Mi"
