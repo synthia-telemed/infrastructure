@@ -11,6 +11,7 @@ spec:
       - "GET"
       - "OPTIONS"
       - "PUT"
+      - "PATCH"
       - "POST"
       - "DELETE"
     accessControlAllowOriginList:
