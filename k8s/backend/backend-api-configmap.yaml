@@ -16,3 +16,5 @@ data:
   DATABASE_TIMEZONE: Asia/Bangkok
   # Redis
   REDIS_HOST: common-redis-srv.default:6379
+
+  FIREBASE_CRED_FILE_PATH: /secret/firebase-service-account.json

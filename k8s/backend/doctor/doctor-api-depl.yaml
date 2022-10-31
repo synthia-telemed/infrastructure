@@ -12,6 +12,11 @@ spec:
       labels:
         app: backend-doctor-api-depl
     spec:
+      volumes:
+        - name: backend-api-secret-vol
+          secret:
+            secretName: backend-api-files-secret
+            optional: false
       containers:
         - name: backend-doctor-api-depl
           image: synthiatelemed.azurecr.io/backend-api:e5f6efa14cb61740a773a8f2741a1d2d978c5e1e
@@ -33,6 +38,10 @@ spec:
                 name: backend-doctor-api-secret
             - configMapRef:
                 name: backend-api-configmap
+          volumeMounts:
+            - name: backend-api-secret-vol
+              mountPath: /secret
+              readOnly: true
           livenessProbe:
             httpGet:
               path: /api/healthcheck
