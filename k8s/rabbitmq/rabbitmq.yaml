@@ -32,6 +32,9 @@ spec:
          - secretRef: 
             name: rabbitmq-secret
             optional: true
+        env:
+          - name: RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS
+            value: "-rabbit loopback_users none"
         ports:
         - containerPort: 15672
         - containerPort: 5672
