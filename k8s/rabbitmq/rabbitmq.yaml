@@ -1,61 +1,17 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
 metadata:
-  name: rabbitmq-depl
+  name: rabbitmq
 spec:
-  selector:
-    matchLabels:
-      app: rabbitmq-depl
-  template:
-    metadata:
-      labels:
-        app: rabbitmq-depl
-    spec:
-      volumes:
-        - name: rabbitmq-volume
-          persistentVolumeClaim:
-            claimName: rabbitmq-pvc
-            readOnly: false
-      containers:
-      - name: rabbitmq-depl
-        image: rabbitmq:3.11-management
-        resources:
-          requests:
-            cpu: 20m
-            memory: "128Mi"
-          limits:
-            memory: "512Mi"
-        volumeMounts:
-          - name: rabbitmq-volume
-            mountPath: /var/lib/rabbitmq
-        envFrom:
-         - secretRef: 
-            name: rabbitmq-secret
-            optional: true
-        ports:
-        - containerPort: 15672
-        - containerPort: 5672
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: rabbitmq-ampq-srv
-spec:
-  selector:
-    app: rabbitmq-depl
-  ports:
-  - port: 5672
-    targetPort: 5672
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: rabbitmq-management-srv
-spec:
-  selector:
-    app: rabbitmq-depl
-  ports:
-  - port: 15672
-    targetPort: 15672
+  image: rabbitmq:3.11-management
+  replicas: 1
+  resources:
+    requests:
+      cpu: 20m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 512Mi
+  persistence:
+    storageClassName: default
+    storage: 8Gi
