@@ -11,6 +11,11 @@ spec:
       labels:
         app: rabbitmq-depl
     spec:
+      volumes:
+        - name: rabbitmq-volume
+          persistentVolumeClaim:
+            claimName: rabbitmq-pvc
+            readOnly: false
       containers:
       - name: rabbitmq-depl
         image: rabbitmq:3.11-management
@@ -20,6 +25,9 @@ spec:
             memory: "128Mi"
           limits:
             memory: "256Mi"
+        volumeMounts:
+          - name: rabbitmq-volume
+            mountPath: /var/lib/rabbitmq
         envFrom:
          - secretRef: 
             name: rabbitmq-secret
