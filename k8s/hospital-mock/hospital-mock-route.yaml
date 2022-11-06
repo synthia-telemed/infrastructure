@@ -10,8 +10,8 @@ spec:
   - match: Host(`hospital-mock.synthia.tech`)
     kind: Rule
     middlewares:
-      - name: admin-basic-auth-middleware
-        namespace: traefik
+      # - name: admin-basic-auth-middleware
+      #   namespace: traefik
       - name: default-rate-limit-middleware
         namespace: default
     services:
