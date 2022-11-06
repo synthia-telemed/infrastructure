@@ -5,7 +5,7 @@ metadata:
   namespace: rabbitmq
 data:
   # RabbitMQ
-  RABBITMQ_HOST: rabbitmq-ampq-srv
+  RABBITMQ_HOST: rabbitmq.rabbitmq.svc
   RABBITMQ_PORT: '5672'
   # DB
   DATABASE_NAME: synthia

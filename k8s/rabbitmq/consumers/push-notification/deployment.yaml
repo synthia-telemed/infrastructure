@@ -31,17 +31,6 @@ spec:
             - name: consumer-secret-vol
               mountPath: /secret
               readOnly: true
-          env:
-            - name: RABBITMQ_USER
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secret
-                  key: RABBITMQ_DEFAULT_USER
-            - name: RABBITMQ_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: rabbitmq-secret
-                  key: RABBITMQ_DEFAULT_PASS
           envFrom:
             - secretRef:
                 name: push-notification-consumer-secret
