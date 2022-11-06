@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: push-notification-consumer-configmap
+  namespace: rabbitmq
+data:
+  # RabbitMQ
+  RABBITMQ_HOST: rabbitmq-ampq-srv
+  RABBITMQ_PORT: '5672'
+  # DB
+  DATABASE_NAME: synthia
+  DATABASE_SSL_MODE: verify-full
+  DATABASE_SSL_ROOT_CERT: /app/DigiCertGlobalRootCA.crt.pem
+  DATABASE_TIMEZONE: Asia/Bangkok
+  # Firebase
+  FIREBASE_CRED_FILE_PATH: /secret/firebase-service-account.json

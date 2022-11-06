@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: push-notification-consumer
+  namespace: rabbitmq
+spec:
+  selector:
+    matchLabels:
+      app: push-notification-consumer
+  template:
+    metadata:
+      labels:
+        app: push-notification-consumer
+    spec:
+      volumes:
+        - name: consumer-secret-vol
+          secret:
+            secretName: push-notification-files-secret
+            optional: false
+      containers:
+      - name: push-notification-consumer
+        image: synthiatelemed.azurecr.io/push-notification-consumer:latest
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "10m"
+          limits:
+            memory: "128Mi"
+            cpu: "30m"
+        volumeMounts:
+            - name: consumer-secret-vol
+              mountPath: /secret
+              readOnly: true
+        env:
+          - name: RABBITMQ_USER
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-secret
+                key: RABBITMQ_DEFAULT_USER
+          - name: RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-secret
+                key: RABBITMQ_DEFAULT_PASS
+        envFrom:
+          - secretRef: 
+              name: push-notification-consumer-secret
+              optional: false
+          - configMapRef:
+              name: push-notification-consumer-configmap
+              optional: false
