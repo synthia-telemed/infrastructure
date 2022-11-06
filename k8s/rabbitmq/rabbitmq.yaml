@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-depl
+spec:
+  selector:
+    matchLabels:
+      app: rabbitmq-depl
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-depl
+    spec:
+      containers:
+      - name: rabbitmq-depl
+        image: rabbitmq:3.11-management
+        resources:
+          requests:
+            cpu: 100m
+            memory: "128Mi"
+          limits:
+            memory: "256Mi"
+        envFrom:
+         - secretRef: 
+            name: rabbitmq-secret
+            optional: true
+        ports:
+        - containerPort: 15672
+        - containerPort: 5672
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-ampq-srv
+spec:
+  selector:
+    app: rabbitmq-depl
+  ports:
+  - port: 5672
+    targetPort: 5672
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-management-srv
+spec:
+  selector:
+    app: rabbitmq-depl
+  ports:
+  - port: 15672
+    targetPort: 15672
