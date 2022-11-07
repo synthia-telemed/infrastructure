@@ -29,6 +29,9 @@ spec:
             - secretRef:
                 name: hospital-mock-secret
                 optional: false
+            - configMapRef:
+                name: hospital-mock-configmap
+                optional: false
           livenessProbe:
             httpGet:
               path: /
