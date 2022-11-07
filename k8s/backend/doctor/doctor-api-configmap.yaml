@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-doctor-api-configmap
+  namespace: backend-api
+data:
+  RABBITMQ_HOST: rabbitmq.rabbitmq.svc
+  RABBITMQ_PORT: "5672"
+  RABBITMQ_NOTIFICATION_QUEUE_NAME: "push-notification-queue"
+  RABBITMQ_NOTIFICATION_EXCHANGE_NAME: "notification"
+  RABBITMQ_NOTIFICATION_ROUTING_KEY: "push-notification"
