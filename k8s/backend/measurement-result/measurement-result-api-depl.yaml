@@ -25,7 +25,7 @@ spec:
             - secretRef:
                 name: measurement-result-api-secret
           env:
-            - name: HOSPITAL_SYS_ENDPOINT
+            - name: HOSPITAL_SYSTEM_ENDPOINT
               value: http://hospital-mock-srv.hospital-mock:3000/graphql
           ports:
             - containerPort: 3000
