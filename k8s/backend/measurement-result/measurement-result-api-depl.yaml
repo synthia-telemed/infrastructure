@@ -24,6 +24,7 @@ spec:
           envFrom:
             - secretRef:
                 name: measurement-result-api-secret
+                optional: false
           env:
             - name: HOSPITAL_SYSTEM_ENDPOINT
               value: http://hospital-mock-srv.hospital-mock:3000/graphql
