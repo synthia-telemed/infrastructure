@@ -28,6 +28,10 @@ spec:
           env:
             - name: HOSPITAL_SYSTEM_ENDPOINT
               value: http://hospital-mock-srv.hospital-mock:3000/graphql
+            - name: REDIS_HOST
+              value: common-redis-srv.default
+            - name: REDIS_PORT
+              value: '6379'
           ports:
             - containerPort: 3000
           livenessProbe:
