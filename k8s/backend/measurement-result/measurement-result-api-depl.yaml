@@ -39,12 +39,12 @@ spec:
               path: /api/healthcheck
               port: 3000
             failureThreshold: 5
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /api/healthcheck
               port: 3000
             failureThreshold: 5
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 5
