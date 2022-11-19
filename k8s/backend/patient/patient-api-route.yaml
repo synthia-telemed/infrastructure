@@ -36,7 +36,7 @@ spec:
       namespace: backend-api
       kind: Service
       port: 8080
-  - match: Host(`api.synthia.tech`) && PathPrefix(`/patient/api`)
+  - match: Host(`api.synthia.tech`) && (PathPrefix(`/patient/api`) || Path(`/patient/api/auth/signout`)
     kind: Rule
     middlewares:
       - name: common-headers-middleware
