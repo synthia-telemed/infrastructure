@@ -10,6 +10,7 @@ spec:
   # Patient API
   - match: Host(`api.synthia.tech`) && PathPrefix(`/patient/api/docs/`)
     kind: Rule
+    priority: 5
     middlewares:
       - name: default-rate-limit-middleware
         namespace: default
@@ -24,6 +25,7 @@ spec:
       port: 8080
   - match: Host(`api.synthia.tech`) && (PathPrefix(`/patient/api/auth`) || Path(`/patient/api/healthcheck`))
     kind: Rule
+    priority: 10
     middlewares:
       - name: common-headers-middleware
         namespace: default
@@ -38,6 +40,7 @@ spec:
       port: 8080
   - match: Host(`api.synthia.tech`) && (Path(`/patient/api/auth/signout`) || PathPrefix(`/patient/api`))
     kind: Rule
+    priority: 1
     middlewares:
       - name: common-headers-middleware
         namespace: default
