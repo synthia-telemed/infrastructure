@@ -1,0 +1,18 @@
+[submodule "image-builder/backend-api"]
+	path = image-builder/backend-api
+	url = https://github.com/synthia-telemed/backend-api.git
+[submodule "image-builder/socket-server"]
+	path = image-builder/socket-server
+	url = https://github.com/synthia-telemed/socket-server.git
+[submodule "image-builder/measurement-result-api"]
+	path = image-builder/measurement-result-api
+	url = https://github.com/synthia-telemed/measurement-result-api.git
+[submodule "image-builder/hospital-it-system-mock"]
+	path = image-builder/hospital-it-system-mock
+	url = https://github.com/synthia-telemed/hospital-it-system-mock.git
+[submodule "image-builder/push-notification-consumer"]
+	path = image-builder/push-notification-consumer
+	url = https://github.com/synthia-telemed/push-notification-consumer.git
+[submodule "image-builder/heimdall"]
+	path = image-builder/heimdall
+	url = https://github.com/synthia-telemed/heimdall.git
