@@ -28,7 +28,8 @@ resource "helm_release" "argocd" {
 }
 
 data "kubectl_file_documents" "argocd-repo-secret" {
-  content = file("synthia-infrastructure-repo-secret-sealed.yaml")
+  # content = file("synthia-infrastructure-repo-secret-sealed.yaml")
+  content = file("synthia-infrastructure-repo-secret.yaml")
 }
 
 resource "kubectl_manifest" "argocd-repo-secret" {
