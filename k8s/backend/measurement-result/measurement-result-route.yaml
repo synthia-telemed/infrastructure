@@ -51,7 +51,4 @@ spec:
       namespace: backend-api
       kind: Service
       port: 3000
-  tls:
-    secretName: backend-api-tls
-    domains: 
-    - main: api.synthia.tech
+  tls: {}

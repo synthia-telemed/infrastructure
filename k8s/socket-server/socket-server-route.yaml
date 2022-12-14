@@ -19,7 +19,4 @@ spec:
       namespace: socket-server
       kind: Service
       port: 3000
-  tls:
-    secretName: socket-tls
-    domains: 
-    - main: socket.synthia.tech
+  tls: {}
