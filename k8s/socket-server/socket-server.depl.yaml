@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: socket-server-depl
-          image: CONTAINER_REPO/socket-server
+          image: synthiatelemed.azurecr.io/socket-server
           resources:
             limits:
               memory: "256Mi"

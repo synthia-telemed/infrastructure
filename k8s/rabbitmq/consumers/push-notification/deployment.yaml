@@ -20,7 +20,7 @@ spec:
             optional: false
       containers:
         - name: push-notification-consumer
-          image: CONTAINER_REPO/push-notification-consumer
+          image: synthiatelemed.azurecr.io/push-notification-consumer
           resources:
             requests:
               memory: "32Mi"
