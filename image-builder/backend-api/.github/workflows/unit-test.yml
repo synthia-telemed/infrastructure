@@ -1,0 +1,53 @@
+name: Unit test
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'develop'
+  pull_request:
+    branches: 
+      - 'main'
+      - 'develop'
+
+env:
+  REGISTRY: synthiatelemed.azurecr.io
+  
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.18
+    - name: Log into registry ${{ env.REGISTRY }}
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+    - name: Install mockgen
+      run: go install github.com/golang/mock/mockgen@v1.6.0
+    # - name: Get Ginkgo
+    # run: go get github.com/onsi/ginkgo/v2/ginkgo
+    - name: Install Ginkgo
+      run: go install github.com/onsi/ginkgo/v2/ginkgo@v2.1.4 
+    - name: mockgen
+      run: make mockgen
+    - name: Run unit tests
+      run: make unit-test
+      env: 
+        GIN_MODE: test
+        OMISE_PUBLIC_KEY: ${{ secrets.OMISE_PUBLIC_KEY }}
+        OMISE_SECRET_KEY: ${{ secrets.OMISE_SECRET_KEY }}
+        HOSPITAL_SYS_ENDPOINT: "https://hospital-mock.synthia.tech/graphql"

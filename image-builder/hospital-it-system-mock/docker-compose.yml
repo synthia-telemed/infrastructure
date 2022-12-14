@@ -1,0 +1,12 @@
+services:
+  postgress:
+    image: postgres
+    volumes:
+      - hospital-dev-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: unsecurepassword
+    ports:
+      - 5432:5432
+
+volumes:
+  hospital-dev-postgres:

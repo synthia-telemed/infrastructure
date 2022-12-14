@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nestgraphql {
+  provider = "node node_modules/prisma-nestjs-graphql"
+  output   = "../src/@generated"
+  reExport = Directories
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum BloodType {
+  O
+  A
+  B
+  AB
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+model Patient {
+  id            String        @id
+  initial_th    String
+  firstname_th  String
+  lastname_th   String
+  initial_en    String
+  firstname_en  String
+  lastname_en   String
+  nationality   String
+  nationalId    String?
+  passportId    String?
+  phoneNumber   String
+  weight        Float
+  height        Float
+  birthDate     DateTime
+  profilePicURL String
+  bloodType     BloodType
+  appointments  Appointment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Doctor {
+  id            Int           @id @default(autoincrement())
+  initial_th    String
+  firstname_th  String
+  lastname_th   String
+  initial_en    String
+  firstname_en  String
+  lastname_en   String
+  position      String
+  username      String        @unique
+  password      String
+  profilePicURL String
+  appointments  Appointment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Appointment {
+  id              Int               @id @default(autoincrement())
+  patient         Patient           @relation(fields: [patientId], references: [id])
+  patientId       String
+  doctor          Doctor            @relation(fields: [doctorId], references: [id])
+  doctorId        Int
+  startDateTime   DateTime
+  endDateTime     DateTime
+  detail          String
+  nextAppointment DateTime?
+  status          AppointmentStatus @default(SCHEDULED)
+  prescriptions   Prescription[]
+  invoice         Invoice?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Medicine {
+  id            Int            @id @default(autoincrement())
+  name          String
+  description   String
+  pictureURL    String
+  prescriptions Prescription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Prescription {
+  id            Int         @id @default(autoincrement())
+  medicine      Medicine    @relation(fields: [medicineId], references: [id])
+  medicineId    Int
+  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+  appointmentId Int
+  amount        Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Invoice {
+  id            Int           @id @default(autoincrement())
+  appointment   Appointment   @relation(fields: [appointmentId], references: [id])
+  appointmentId Int           @unique
+  paid          Boolean       @default(false)
+  total         Float
+  invoiceItems  InvoiceItem[]
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  InvoiceDiscount InvoiceDiscount[]
+}
+
+model InvoiceItem {
+  id        Int     @id @default(autoincrement())
+  name      String
+  price     Float
+  quantity  Int
+  invoice   Invoice @relation(fields: [invoiceId], references: [id])
+  invoiceId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InvoiceDiscount {
+  id        Int     @id @default(autoincrement())
+  name      String
+  amount    Float
+  invoice   Invoice @relation(fields: [invoiceId], references: [id])
+  invoiceId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

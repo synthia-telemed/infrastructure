@@ -1,0 +1,585 @@
+{
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a Synthia doctor backend API.",
+        "title": "Synthia Doctor Backend API",
+        "contact": {},
+        "version": "1.0.0"
+    },
+    "basePath": "/doctor/api",
+    "paths": {
+        "/appointment": {
+            "get": {
+                "security": [
+                    {
+                        "UserID": []
+                    },
+                    {
+                        "JWSToken": []
+                    }
+                ],
+                "tags": [
+                    "Appointment"
+                ],
+                "summary": "Get list of the appointments with filter",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "page_number",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "CANCELLED",
+                            "COMPLETED",
+                            "SCHEDULED"
+                        ],
+                        "type": "string",
+                        "name": "status",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "text",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of appointment overview details with pagination information",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/handler.ListAppointmentsResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Doctor not found",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/appointment/complete": {
+            "post": {
+                "security": [
+                    {
+                        "UserID": []
+                    },
+                    {
+                        "JWSToken": []
+                    }
+                ],
+                "tags": [
+                    "Appointment"
+                ],
+                "summary": "Finish the appointment and close the room",
+                "parameters": [
+                    {
+                        "description": "Status of the appointment",
+                        "name": "CompleteAppointmentRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.CompleteAppointmentRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Appointment status is set"
+                    },
+                    "400": {
+                        "description": "Doctor isn't currently in any room",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/appointment/{appointmentID}": {
+            "get": {
+                "security": [
+                    {
+                        "UserID": []
+                    },
+                    {
+                        "JWSToken": []
+                    }
+                ],
+                "tags": [
+                    "Appointment"
+                ],
+                "summary": "Get appointment detail",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID of the appointment",
+                        "name": "appointmentID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Appointment detail",
+                        "schema": {
+                            "$ref": "#/definitions/hospital.DoctorAppointment"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid appointment ID",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Appointment not found",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "UserID": []
+                    },
+                    {
+                        "JWSToken": []
+                    }
+                ],
+                "tags": [
+                    "Appointment"
+                ],
+                "summary": "Init the appointment room",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID of the appointment",
+                        "name": "appointmentID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Room ID is return to be used with socket server",
+                        "schema": {
+                            "$ref": "#/definitions/handler.InitAppointmentRoomResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "The appointment can start 10 minutes early and not later than 3 hours",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Appointment not found",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/appointment/{appointmentID}/can-join": {
+            "get": {
+                "security": [
+                    {
+                        "UserID": []
+                    },
+                    {
+                        "JWSToken": []
+                    }
+                ],
+                "tags": [
+                    "Appointment"
+                ],
+                "summary": "Check if the doctor can join or open the appointment room",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID of the appointment",
+                        "name": "appointmentID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "The appointment can start 10 minutes early and not later than 3 hours",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Appointment not found",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signin": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Signin doctor with credential",
+                "parameters": [
+                    {
+                        "description": "Username and password of the doctor",
+                        "name": "SigninRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.SigninRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Token is return when authentication is successes",
+                        "schema": {
+                            "$ref": "#/definitions/handler.SigninResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Provided credential is not in the hospital system",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/server.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handler.CompleteAppointmentRequest": {
+            "type": "object",
+            "required": [
+                "status"
+            ],
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "CANCELLED",
+                        "COMPLETED"
+                    ]
+                }
+            }
+        },
+        "handler.InitAppointmentRoomResponse": {
+            "type": "object",
+            "properties": {
+                "room_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "handler.ListAppointmentsResponse": {
+            "type": "object",
+            "properties": {
+                "appointments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/hospital.AppointmentOverview"
+                    }
+                },
+                "page_number": {
+                    "type": "integer"
+                },
+                "per_page": {
+                    "type": "integer"
+                },
+                "total_item": {
+                    "type": "integer"
+                },
+                "total_page": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handler.SigninRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "handler.SigninResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "hospital.AppointmentOverview": {
+            "type": "object",
+            "properties": {
+                "detail": {
+                    "type": "string"
+                },
+                "doctor": {
+                    "$ref": "#/definitions/hospital.DoctorOverview"
+                },
+                "end_date_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "patient": {
+                    "$ref": "#/definitions/hospital.PatientOverview"
+                },
+                "start_date_time": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "hospital.DoctorAppointment": {
+            "type": "object",
+            "properties": {
+                "detail": {
+                    "type": "string"
+                },
+                "doctor": {
+                    "$ref": "#/definitions/hospital.DoctorOverview"
+                },
+                "end_date_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "next_appointment": {
+                    "type": "string"
+                },
+                "patient": {
+                    "$ref": "#/definitions/hospital.DoctorAppointmentPatient"
+                },
+                "start_date_time": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "hospital.DoctorAppointmentPatient": {
+            "type": "object",
+            "properties": {
+                "birth_date": {
+                    "type": "string"
+                },
+                "blood_type": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "height": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "profile_pic_url": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "number"
+                }
+            }
+        },
+        "hospital.DoctorOverview": {
+            "type": "object",
+            "properties": {
+                "full_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                },
+                "profile_pic_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "hospital.PatientOverview": {
+            "type": "object",
+            "properties": {
+                "full_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "profile_pic_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "server.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "JWSToken": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        },
+        "UserID": {
+            "type": "apiKey",
+            "name": "X-USER-ID",
+            "in": "header"
+        }
+    }
+}

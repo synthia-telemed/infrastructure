@@ -27,17 +27,17 @@ resource "helm_release" "argocd" {
   }
 }
 
-# data "kubectl_file_documents" "argocd-repo-secret" {
-#   content = file("synthia-infrastructure-repo-secret-sealed.yaml")
-# }
+data "kubectl_file_documents" "argocd-repo-secret" {
+  content = file("synthia-infrastructure-repo-secret-sealed.yaml")
+}
 
-# resource "kubectl_manifest" "argocd-repo-secret" {
-#   for_each  = data.kubectl_file_documents.argocd-repo-secret.manifests
-#   yaml_body = each.value
-#   depends_on = [
-#     helm_release.argocd
-#   ]
-# }
+resource "kubectl_manifest" "argocd-repo-secret" {
+  for_each  = data.kubectl_file_documents.argocd-repo-secret.manifests
+  yaml_body = each.value
+  depends_on = [
+    helm_release.argocd
+  ]
+}
 
 // ArgoCD Applications
 data "kubectl_path_documents" "argocd-apps" {

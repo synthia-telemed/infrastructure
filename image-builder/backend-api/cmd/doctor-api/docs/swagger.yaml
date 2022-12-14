@@ -1,0 +1,373 @@
+basePath: /doctor/api
+consumes:
+- application/json
+definitions:
+  handler.CompleteAppointmentRequest:
+    properties:
+      status:
+        enum:
+        - CANCELLED
+        - COMPLETED
+        type: string
+    required:
+    - status
+    type: object
+  handler.InitAppointmentRoomResponse:
+    properties:
+      room_id:
+        type: string
+    type: object
+  handler.ListAppointmentsResponse:
+    properties:
+      appointments:
+        items:
+          $ref: '#/definitions/hospital.AppointmentOverview'
+        type: array
+      page_number:
+        type: integer
+      per_page:
+        type: integer
+      total_item:
+        type: integer
+      total_page:
+        type: integer
+    type: object
+  handler.SigninRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  handler.SigninResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  hospital.AppointmentOverview:
+    properties:
+      detail:
+        type: string
+      doctor:
+        $ref: '#/definitions/hospital.DoctorOverview'
+      end_date_time:
+        type: string
+      id:
+        type: string
+      patient:
+        $ref: '#/definitions/hospital.PatientOverview'
+      start_date_time:
+        type: string
+      status:
+        type: string
+    type: object
+  hospital.DoctorAppointment:
+    properties:
+      detail:
+        type: string
+      doctor:
+        $ref: '#/definitions/hospital.DoctorOverview'
+      end_date_time:
+        type: string
+      id:
+        type: string
+      next_appointment:
+        type: string
+      patient:
+        $ref: '#/definitions/hospital.DoctorAppointmentPatient'
+      start_date_time:
+        type: string
+      status:
+        type: string
+    type: object
+  hospital.DoctorAppointmentPatient:
+    properties:
+      birth_date:
+        type: string
+      blood_type:
+        type: string
+      full_name:
+        type: string
+      height:
+        type: number
+      id:
+        type: string
+      profile_pic_url:
+        type: string
+      weight:
+        type: number
+    type: object
+  hospital.DoctorOverview:
+    properties:
+      full_name:
+        type: string
+      id:
+        type: string
+      position:
+        type: string
+      profile_pic_url:
+        type: string
+    type: object
+  hospital.PatientOverview:
+    properties:
+      full_name:
+        type: string
+      id:
+        type: string
+      profile_pic_url:
+        type: string
+    type: object
+  server.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a Synthia doctor backend API.
+  title: Synthia Doctor Backend API
+  version: 1.0.0
+paths:
+  /appointment:
+    get:
+      parameters:
+      - in: query
+        name: end_date
+        type: string
+      - in: query
+        name: page_number
+        required: true
+        type: integer
+      - in: query
+        name: per_page
+        required: true
+        type: integer
+      - in: query
+        name: start_date
+        type: string
+      - enum:
+        - CANCELLED
+        - COMPLETED
+        - SCHEDULED
+        in: query
+        name: status
+        required: true
+        type: string
+      - in: query
+        name: text
+        type: string
+      responses:
+        "200":
+          description: List of appointment overview details with pagination information
+          schema:
+            items:
+              $ref: '#/definitions/handler.ListAppointmentsResponse'
+            type: array
+        "400":
+          description: Doctor not found
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+      security:
+      - UserID: []
+      - JWSToken: []
+      summary: Get list of the appointments with filter
+      tags:
+      - Appointment
+  /appointment/{appointmentID}:
+    get:
+      parameters:
+      - description: ID of the appointment
+        in: path
+        name: appointmentID
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Appointment detail
+          schema:
+            $ref: '#/definitions/hospital.DoctorAppointment'
+        "400":
+          description: Invalid appointment ID
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "404":
+          description: Appointment not found
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+      security:
+      - UserID: []
+      - JWSToken: []
+      summary: Get appointment detail
+      tags:
+      - Appointment
+    post:
+      parameters:
+      - description: ID of the appointment
+        in: path
+        name: appointmentID
+        required: true
+        type: integer
+      responses:
+        "201":
+          description: Room ID is return to be used with socket server
+          schema:
+            $ref: '#/definitions/handler.InitAppointmentRoomResponse'
+        "400":
+          description: The appointment can start 10 minutes early and not later than
+            3 hours
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "404":
+          description: Appointment not found
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+      security:
+      - UserID: []
+      - JWSToken: []
+      summary: Init the appointment room
+      tags:
+      - Appointment
+  /appointment/{appointmentID}/can-join:
+    get:
+      parameters:
+      - description: ID of the appointment
+        in: path
+        name: appointmentID
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: The appointment can start 10 minutes early and not later than
+            3 hours
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "404":
+          description: Appointment not found
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+      security:
+      - UserID: []
+      - JWSToken: []
+      summary: Check if the doctor can join or open the appointment room
+      tags:
+      - Appointment
+  /appointment/complete:
+    post:
+      parameters:
+      - description: Status of the appointment
+        in: body
+        name: CompleteAppointmentRequest
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CompleteAppointmentRequest'
+      responses:
+        "201":
+          description: Appointment status is set
+        "400":
+          description: Doctor isn't currently in any room
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+      security:
+      - UserID: []
+      - JWSToken: []
+      summary: Finish the appointment and close the room
+      tags:
+      - Appointment
+  /auth/signin:
+    post:
+      parameters:
+      - description: Username and password of the doctor
+        in: body
+        name: SigninRequest
+        required: true
+        schema:
+          $ref: '#/definitions/handler.SigninRequest'
+      responses:
+        "201":
+          description: Token is return when authentication is successes
+          schema:
+            $ref: '#/definitions/handler.SigninResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "401":
+          description: Provided credential is not in the hospital system
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/server.ErrorResponse'
+      summary: Signin doctor with credential
+      tags:
+      - Auth
+produces:
+- application/json
+securityDefinitions:
+  JWSToken:
+    in: header
+    name: Authorization
+    type: apiKey
+  UserID:
+    in: header
+    name: X-USER-ID
+    type: apiKey
+swagger: "2.0"

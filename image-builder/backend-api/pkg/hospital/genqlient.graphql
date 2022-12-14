@@ -1,0 +1,205 @@
+query getPatient($where: PatientWhereInput!) {
+    patient(where: $where) {
+        birthDate
+        bloodType
+        createdAt
+        firstname_en
+        firstname_th
+        height
+        id
+        initial_en
+        initial_th
+        lastname_en
+        lastname_th
+        nationalId
+        nationality
+        passportId
+        phoneNumber
+        updatedAt
+        weight
+        profilePicURL
+    }
+}
+
+query getDoctor($where: DoctorWhereInput!) {
+    doctor(where: $where) {
+        createdAt
+        firstname_en
+        firstname_th
+        id
+        initial_en
+        initial_th
+        lastname_en
+        lastname_th
+        position
+        updatedAt
+        username
+        profilePicURL
+    }
+}
+
+query assertDoctorCredential($password: String!, $username: String!) {
+    assertDoctorPassword(password: $password, username: $username)
+}
+
+query getInvoice($where: InvoiceWhereInput!) {
+    invoice(where: $where) {
+        createdAt
+        id
+        paid
+        total
+        appointment {
+            id
+            patientId
+        }
+        InvoiceDiscount {
+            name
+            amount
+        }
+    }
+}
+
+mutation paidInvoice($paidInvoiceId: Float!) {
+    paidInvoice(id: $paidInvoiceId) {
+        id
+        paid
+        total
+        appointmentId
+    }
+}
+
+query getAppointments($where: AppointmentWhereInput, $orderBy: [AppointmentOrderByWithRelationInput!]) {
+    appointments(where: $where, orderBy: $orderBy) {
+        id
+        startDateTime
+        endDateTime
+        status
+        detail
+        doctor {
+            id
+            initial_en
+            firstname_en
+            lastname_en
+            position
+            profilePicURL
+        }
+        patient {
+            id
+            initial_en
+            firstname_en
+            lastname_en
+            profilePicURL
+        }
+    }
+}
+
+query getAppointmentsWithPagination($where: AppointmentWhereInput, $orderBy: [AppointmentOrderByWithRelationInput!], $take: Int, $skip: Int) {
+    appointments(where: $where, orderBy: $orderBy, take: $take, skip: $skip) {
+        id
+        startDateTime
+        endDateTime
+        status
+        detail
+        doctor {
+            id
+            initial_en
+            firstname_en
+            lastname_en
+            position
+            profilePicURL
+        }
+        patient {
+            id
+            initial_en
+            firstname_en
+            lastname_en
+            profilePicURL
+        }
+    }
+}
+
+query getAppointment($where: AppointmentWhereInput!) {
+    appointment(where: $where) {
+        id
+        patientId
+        startDateTime
+        endDateTime
+        detail
+        status
+        nextAppointment
+        doctor {
+            id
+            initial_en
+            firstname_en
+            lastname_en
+            position
+            profilePicURL
+        }
+        invoice {
+            id
+            total
+            paid
+            invoiceItems {
+                name
+                price
+                quantity
+            }
+            InvoiceDiscount {
+                id
+                name
+                amount
+            }
+        }
+        prescriptions {
+            amount
+            medicine {
+                name
+                description
+                pictureURL
+            }
+        }
+    }
+}
+
+mutation setAppointmentStatus($setAppointmentStatusId: Float!, $status: AppointmentStatus!) {
+    setAppointmentStatus(id: $setAppointmentStatusId, status: $status) {
+        id
+        status
+    }
+}
+
+query getAppointmentIds($where: AppointmentWhereInput) {
+    appointments(where: $where) {
+        id
+    }
+}
+
+query getDoctorAppointment($where: AppointmentWhereInput!) {
+    appointment(where: $where) {
+        id
+        detail
+        startDateTime
+        endDateTime
+        nextAppointment
+        status
+        patient {
+            id
+            initial_en
+            firstname_en
+            lastname_en
+            birthDate
+            bloodType
+            height
+            weight
+            profilePicURL
+        }
+        doctor {
+            id
+            initial_en
+            firstname_en
+            lastname_en
+            position
+            profilePicURL
+        }
+    }
+}
