@@ -59,8 +59,23 @@ resource "azurerm_postgresql_flexible_server" "postgresql_server" {
   ]
 }
 
+resource "azurerm_postgresql_flexible_server_firewall_rule" "allow-all-firewall" {
+  name             = "allow-all"
+  server_id        = azurerm_postgresql_flexible_server.postgresql_server.id
+  start_ip_address = "0.0.0.0"
+  end_ip_address   = "255.255.255.255"
+}
+
 resource "azurerm_postgresql_flexible_server_database" "hospital_mock_db" {
   name      = "hospital-mock"
+  server_id = azurerm_postgresql_flexible_server.postgresql_server.id
+  depends_on = [
+    azurerm_postgresql_flexible_server.postgresql_server
+  ]
+}
+
+resource "azurerm_postgresql_flexible_server_database" "synthia_db" {
+  name      = "synthia"
   server_id = azurerm_postgresql_flexible_server.postgresql_server.id
   depends_on = [
     azurerm_postgresql_flexible_server.postgresql_server
